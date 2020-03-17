@@ -1,10 +1,10 @@
 -- Stored Procedure Working File
 
 -- Creation SQL
-    CREATE PROCEDURE dbo.RunMazeSimulator @MazeID int, @Action varchar(10)
-    AS
-    SELECT @MazeID, @Action
-    GO;
+CREATE PROCEDURE dbo.RunMazeSimulator @MazeID int, @Action varchar(10)
+AS
+SELECT @MazeID, @Action
+GO;
 
 -- Retrive List of stored procedures that have been created
     -- SELECT * 
@@ -13,116 +13,182 @@
 
 -- Make changes to the current procedure
 ALTER PROCEDURE dbo.RunMazeSimulator
-    @MazeID  INT
-    ,@Action VARCHAR(10)
-    AS
-    
-    declare @doorToMaze int, @leftMazeID int, @rightMazeID int;
+@MazeID  INT
+,@Action VARCHAR(10)
+AS
 
-    BEGIN
-        SELECT 
-            @doorToMaze = DoorMazeID,
-            @leftMazeID = LeftMazeID,
-            @rightMazeID = RightMazeID
-        FROM 
+declare @doorMazeID int, @leftMazeID int, @rightMazeID int;
+
+BEGIN
+    SELECT 
+        @doorMazeID = DoorMazeID,
+        @leftMazeID = LeftMazeID,
+        @rightMazeID = RightMazeID
+    FROM 
+        Mazes
+    WHERE 
+        MazeID = @MazeID;
+END
+
+declare @enemyCount int;
+
+IF @Action = 'left'
+BEGIN
+    IF @leftMazeID is NULL
+        PRINT "Invalid move" -- TODO
+    ELSE 
+        SELECT
+            @enemyCount = EnemyCount
+        FROM
             Mazes
-        WHERE 
-            MazeID = @MazeID;
-    END
+        WHERE
+            MazeID = @leftMazeID;
 
-    declare @enemyCount int;
-
-    IF @Action = 'left'
-    BEGIN
-        IF @leftMazeID is NULL
-            PRINT "Invalid move" -- TODO
-        ELSE 
-            SELECT
-                @enemyCount = EnemyCount
-            FROM
-                Mazes
-            WHERE
-                MazeID = @leftMazeID;
-
-            UPDATE 
-                MazeProgress
-            SET 
-                CurrentMazeID = @leftMazeID, 
-                KillCount = KillCount + @enemyCount,
-                StepCount = StepCount + 1
-            WHERE 
-                ProgressID = 1;
-    END
-
-    IF @Action = 'right'
-    BEGIN
-        IF @rightMazeID = -1
-            PRINT "Invalid move" -- TODO
-        ELSE 
-            SELECT
-                @enemyCount = EnemyCount
-            FROM
-                Mazes
-            WHERE
-                MazeID = @rightMazeID;
-
-            UPDATE 
-                MazeProgress
-            SET 
-                CurrentMazeID = @rightMazeID, 
-                KillCount = KillCount + @enemyCount,
-                StepCount = StepCount + 1
-            WHERE 
-                ProgressID = 1;
-    END
-
-    IF @Action = 'forward' -- is NULL
-    BEGIN
-        IF @doorToMaze = -1
-            PRINT "Invalid move" -- TODO
-        ELSE 
-            SELECT
-                @enemyCount = EnemyCount
-            FROM
-                Mazes
-            WHERE
-                MazeID = @doorToMaze;
-
-            UPDATE 
-                MazeProgress
-            SET 
-                CurrentMazeID = @doorToMaze, 
-                KillCount = KillCount + @enemyCount,
-                StepCount = StepCount + 1
-            WHERE 
-                ProgressID = 1;
-    END
-
-    IF @Action = 'restart'
-    BEGIN
         UPDATE 
             MazeProgress
         SET 
-            CurrentMazeID = 5, 
-            KillCount = 0,
-            StepCount = 0
+            CurrentMazeID = @leftMazeID, 
+            KillCount = KillCount + @enemyCount,
+            StepCount = StepCount + 1
         WHERE 
             ProgressID = 1;
-    END
-    
-    Select c.Description
-        ,mp.KillCount
-    From MazeProgress mp
-        Left join Mazes m on mp.CurrentMazeID = m.MazeID
-        Left join Components c on c.ComponentID = m.ComponentID
+END
 
+IF @Action = 'right'
+BEGIN
+    IF @rightMazeID is NULL
+        PRINT "Invalid move" -- TODO
+    ELSE 
+        SELECT
+            @enemyCount = EnemyCount
+        FROM
+            Mazes
+        WHERE
+            MazeID = @rightMazeID;
 
+        UPDATE 
+            MazeProgress
+        SET 
+            CurrentMazeID = @rightMazeID, 
+            KillCount = KillCount + @enemyCount,
+            StepCount = StepCount + 1
+        WHERE 
+            ProgressID = 1;
+END
 
-    GO;
+IF @Action = 'openDoor' -- is NULL
+BEGIN
+    IF @doorMazeID is NULL
+        PRINT "Invalid move" -- TODO
+    ELSE 
+        SELECT
+            @enemyCount = EnemyCount
+        FROM
+            Mazes
+        WHERE
+            MazeID = @doorMazeID;
 
+        UPDATE 
+            MazeProgress
+        SET 
+            CurrentMazeID = @doorMazeID, 
+            KillCount = KillCount + @enemyCount,
+            StepCount = StepCount + 1
+        WHERE 
+            ProgressID = 1;
+END
+
+IF @Action = 'restart'
+BEGIN
+    UPDATE 
+        MazeProgress
+    SET 
+        CurrentMazeID = 2, 
+        KillCount = 0,
+        StepCount = 0
+    WHERE 
+        ProgressID = 1;
+END
+
+SELECT c.Description
+    ,mp.KillCount
+FROM MazeProgress mp
+    Left join Mazes m on mp.CurrentMazeID = m.MazeID
+    Left join Components c on c.ComponentID = m.ComponentID
+
+GO;
 
 
 -- Execute Pocedure (Update this as you alter the procedure above)
-    Exec RunMazeSimulator 
-        @MazeID = 5
-        ,@Action = 'Right';
+-- 1ST PLAY - easier
+Exec RunMazeSimulator 
+@MazeID = 3
+,@Action = 'left';
+
+Exec RunMazeSimulator 
+@MazeID = 4
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 5
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 10
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 15
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 14
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 9
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 8
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 13
+,@Action = 'openDoor';
+
+
+-- RESTART
+Exec RunMazeSimulator 
+@MazeID = 0
+,@Action = 'restart';
+
+
+-- 2ND PLAY - LOSE
+Exec RunMazeSimulator 
+@MazeID = 3
+,@Action = 'right';
+
+Exec RunMazeSimulator 
+@MazeID = 2
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 7
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 12
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 11
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 6
+,@Action = 'openDoor';
+
+Exec RunMazeSimulator 
+@MazeID = 1
+,@Action = 'openDoor';
