@@ -6,7 +6,7 @@
 CREATE TABLE Components (
     ComponentID int  NOT NULL,
     Type varchar(10)  NOT NULL,
-    Description varchar(50)  NOT NULL,
+    Description varchar(100)  NOT NULL,
     CONSTRAINT Components_pk PRIMARY KEY  (ComponentID)
 );
 

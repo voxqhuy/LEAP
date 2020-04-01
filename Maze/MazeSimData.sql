@@ -8,6 +8,7 @@ insert into Components values (04, 'enemy', 'a maze with an enemy');
 insert into Components values (05, 'exit', 'an exit');
 
 --Mazes: MazeID, DoorMazeID, LeftMazeID, RightMazeID, ComponentID, EnemyCount
+insert into Mazes values (00, 03, NULL, NULL, 02, 0);
 insert into Mazes values (01, NULL, NULL, NULL, 04, 1);
 insert into Mazes values (02, 07, NULL, NULL, 02, 0);
 insert into Mazes values (03, NULL, 04, 02, 03, 0);
@@ -25,4 +26,8 @@ insert into Mazes values (14, 09, NULL, NULL, 02, 0);
 insert into Mazes values (15, 14, NULL, NULL, 02, 1);
 
 --MazeProgress: ProgressID, StepCount, KillCount, CurrentMazeID
-insert into MazeProgress values (01, 0, 0, 00)
+insert into MazeProgress values (01, 0, 0, 00);
+
+select * from Components;
+select * from Mazes;
+select * from MazeProgress;
