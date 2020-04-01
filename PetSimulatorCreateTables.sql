@@ -1,6 +1,13 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2020-03-09 01:30:43.356
 
+Drop TABLE Actions;
+Drop TABLE Pets;
+Drop TABLE PreferredFood;
+Drop TABLE Animals;
+Drop TABLE Foods;
+Drop TABLE States;
+
 -- tables
 -- Table: Actions
 CREATE TABLE Actions (
@@ -29,13 +36,6 @@ CREATE TABLE Foods (
     CONSTRAINT Foods_pk PRIMARY KEY  (FoodID)
 );
 
--- Table: Personalities
-CREATE TABLE Personalities (
-    PerID int  NOT NULL,
-    Name varchar(50)  NOT NULL,
-    CONSTRAINT Personalities_pk PRIMARY KEY  (PerID)
-);
-
 -- Table: Pets
 CREATE TABLE Pets (
     PetID int  NOT NULL Identity,
@@ -45,9 +45,8 @@ CREATE TABLE Pets (
     EnergyLevel int  NOT NULL,
     AffectionLevel int  NOT NULL,
     StateID int  NOT NULL,
-    PerID int  NOT NULL,
     AnimalID int  NOT NULL,
-    CONSTRAINT Pets_pk PRIMARY KEY  (PetID)
+    CONSTRAINT Pets_pk PRIMARY KEY  (Name)
 );
 
 -- Table: PreferredFood
@@ -69,11 +68,6 @@ CREATE TABLE States (
 ALTER TABLE Pets ADD CONSTRAINT Pets_Animals
     FOREIGN KEY (AnimalID)
     REFERENCES Animals (AnimalID);
-
--- Reference: Pets_Personalities (table: Pets)
-ALTER TABLE Pets ADD CONSTRAINT Pets_Personalities
-    FOREIGN KEY (PerID)
-    REFERENCES Personalities (PerID);
 
 -- Reference: Pets_States (table: Pets)
 ALTER TABLE Pets ADD CONSTRAINT Pets_States

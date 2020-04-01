@@ -1,12 +1,12 @@
 --Vales for Pet Simmulator
 
 --Actions: ID, Name, Description, AffectionValue, EnergyValue
-insert into Actions values (01,'Walk','Take your friend for a lovely walk in the park',5,-4);
-insert into Actions values (02,'Bath','Your animal pall is looking grimy, this bath should help',-5,2);
-insert into Actions values (03,'Cuddle','You and you spirit animal cozy up',-5,2);
-insert into Actions values (04,'Scold','You scold your pet, they question the meaning of life',-10,-2);
-insert into Actions values (05,'Praise','You praise your pet, they are elated',10,2);
-insert into Actions values (06,'Play','Fun is everything',15,-4);
+insert into Actions values (01,'Walk','You take your pet for a lovely walk in the park... ',5,-4);
+insert into Actions values (02,'Bath','Your animal pall is looking grimy, this bath should help... ',-4,2);
+insert into Actions values (03,'Cuddle','You and your pet cozy up... ',5,3);
+insert into Actions values (04,'Scold','You scold your pet, they question the meaning of life... ',-10,-2);
+insert into Actions values (05,'Praise','You praise your pet, they are elated... ',10,2);
+insert into Actions values (06,'Play','You and your pet played, fun is everything... ',15,-4);
 
 --Animals: ID, Name, AverageLifespandays
 insert into Animals values (01, 'Cat', 6);
@@ -41,24 +41,12 @@ insert into PreferredFood values (04,05);
 insert into PreferredFood values (05,06);
 insert into PreferredFood values (05,07);
 
---Personalities: ID, Name
-insert into Personalities values (01,'Moody');
-insert into Personalities values (02,'Loyal');
-insert into Personalities values (03,'Mischievous');
-insert into Personalities values (04,'Playful');
-insert into Personalities values (05,'Chill');
-
-
 --States: ID, Description
-insert into States values (01,'Starving');
-insert into States values (02,'Lonley');
-insert into States values (03,'Restless');
-insert into States values (04,'Satisfied');
-insert into States values (05,'Hungry');
-insert into States values (06,'Tooooooo FUll');
-insert into States values (07,'Sad');
-insert into States values (08,'Happy');
-insert into States values (09,'Ready to be left alone!!!');
+insert into States values (01,'Living its best life');
+insert into States values (02,'Ready to be left alone!!!');
+insert into States values (03,'Overly energized');
+insert into States values (04,'Low on energy');
+insert into States values (05,'The abandonment is getting real');
 
 --Pets: Created by stored procedure only
 --insert into Pets values ();
