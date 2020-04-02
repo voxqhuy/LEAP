@@ -1,0 +1,11 @@
+Pet Simulator Setup:
+    Execute the following files in order.  take note of additional instruction for certain files.
+        PetSimulatorCreateTable.sql
+        PetSimData.sql
+
+Executing:
+    Run PetSimExecute.sql
+
+Testing:  
+    To Test Pet Simulator functionallity run PetSimTests.sql
+    

@@ -12,10 +12,10 @@
 
 -- Drop table Pets;
 
-Declare @Pet  VARCHAR(30)   = '2'--'New:03:Milo'
+Declare @Pet  VARCHAR(30)   = '3'--'New:03:Milo'
 Declare @Action VARCHAR(20) = 
-                     'None'
-                    -- 'Walk'
+                    -- 'None'
+                     'Walk'
                     -- 'Bath'
                     -- 'Cuddle'
                     -- 'Scold'

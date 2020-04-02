@@ -1,14 +1,14 @@
 -- Stored Procedure Working File
 
 -- Creation SQL
-CREATE PROCEDURE dbo.RunMazeSimulator @MazeID int, @Action varchar(10)
-AS
-SELECT @MazeID, @Action
-GO;
+-- CREATE PROCEDURE dbo.RunMazeSimulator @MazeID int, @Action varchar(10)
+-- AS
+-- SELECT @MazeID, @Action
+-- GO;
 
 -- Retrive List of stored procedures that have been created
     -- SELECT * 
-    -- FROM Mazes.INFORMATION_SCHEMA.ROUTINES
+    -- FROM INFORMATION_SCHEMA.ROUTINES
     -- WHERE ROUTINE_TYPE = 'PROCEDURE'
 
 -- Make changes to the current procedure
@@ -35,8 +35,11 @@ declare @enemyCount int;
 IF @Action = 'left'
 BEGIN
     IF @leftMazeID is NULL
-        PRINT "Invalid move" -- TODO
+    BEGIN
+        Select 'Invalid move : Game Over' -- TODO
+    END
     ELSE 
+    BEGIN
         SELECT
             @enemyCount = EnemyCount
         FROM
@@ -52,13 +55,17 @@ BEGIN
             StepCount = StepCount + 1
         WHERE 
             ProgressID = 1;
+    END
 END
 
 IF @Action = 'right'
 BEGIN
     IF @rightMazeID is NULL
-        PRINT "Invalid move" -- TODO
+    BEGIN
+        Select 'Invalid move : Game Over' -- TODO
+    END
     ELSE 
+    BEGIN
         SELECT
             @enemyCount = EnemyCount
         FROM
@@ -74,13 +81,17 @@ BEGIN
             StepCount = StepCount + 1
         WHERE 
             ProgressID = 1;
+    END
 END
 
 IF @Action = 'openDoor' -- is NULL
 BEGIN
     IF @doorMazeID is NULL
-        PRINT "Invalid move" -- TODO
+    Begin
+        Select 'Invalid move : Game Over' -- TODO
+    End
     ELSE 
+    Begin
         SELECT
             @enemyCount = EnemyCount
         FROM
@@ -96,6 +107,7 @@ BEGIN
             StepCount = StepCount + 1
         WHERE 
             ProgressID = 1;
+    End
 END
 
 IF @Action = 'restart'
@@ -115,8 +127,6 @@ SELECT c.Description
 FROM MazeProgress mp
     Left join Mazes m on mp.CurrentMazeID = m.MazeID
     Left join Components c on c.ComponentID = m.ComponentID
-
-GO;
 
 
 -- Execute Pocedure (Update this as you alter the procedure above)
