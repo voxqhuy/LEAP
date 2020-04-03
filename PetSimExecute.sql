@@ -1,8 +1,8 @@
 -- Welcome to Virtual Pet Simulator!
     Exec RunPetSimulator 
-        @Pet = --'New:03:Amber'   
-                --'5'
-                 'View'
+        @Pet = --'New:03:Trace'   
+                '1'
+                -- 'View'
                 -- 'New:[AnimalTypeID]:[Name]'
                 
                 -- Enter the ID of the Pet you wish to interact with
@@ -25,7 +25,7 @@
                     -- 'Play'
         
         ,@Feed =
-                     'None'
+                    -- 'None'
                     -- 'Tuna'
                     -- 'Kitty Kibble'
                     -- 'Puppy Chow'
@@ -35,4 +35,4 @@
                     -- 'Unfortunate Mouse'
                     -- 'Milk'
                     -- 'Turkey'
-                    -- 'Flaky Food'
+                     'Flaky Food'
